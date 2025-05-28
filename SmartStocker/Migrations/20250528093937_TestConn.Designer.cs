@@ -11,8 +11,8 @@ using SmartStocker;
 namespace SmartStocker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528083149_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250528093937_TestConn")]
+    partial class TestConn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

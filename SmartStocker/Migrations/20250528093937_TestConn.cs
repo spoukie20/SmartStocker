@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace SmartStocker.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class TestConn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

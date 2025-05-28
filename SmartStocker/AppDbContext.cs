@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SmartStocker.Abscrations;
 using SmartStocker.Models;
 
 namespace SmartStocker
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext(IOptions<Connections> conn) : DbContext
     {
-        // TODO: verplaatsen van string
-        static readonly string connectionString = "Server=localhost; User ID=root; Database=SmartStocker";
-
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -16,7 +14,7 @@ namespace SmartStocker
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(connectionString);
+            optionsBuilder.UseMySQL(conn.Value.DefaultConnection);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
