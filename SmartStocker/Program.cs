@@ -1,5 +1,7 @@
+using SmartStocker.Abscrations;
 using SmartStocker.Extenstions;
 using SmartStocker.Models;
+using SmartStocker.Services;
 using System.Configuration;
 using System.Net;
 
@@ -13,7 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddRepositories(builder.Configuration);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

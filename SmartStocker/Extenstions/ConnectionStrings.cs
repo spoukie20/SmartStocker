@@ -1,4 +1,7 @@
-﻿using SmartStocker.Models;
+﻿using SmartStocker.Abscrations;
+using SmartStocker.Controllers;
+using SmartStocker.Models;
+using SmartStocker.Services;
 using System.Net;
 
 namespace SmartStocker.Extenstions
@@ -9,6 +12,7 @@ namespace SmartStocker.Extenstions
         {
             services.Configure<Connections>(configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<AppDbContext>();
+            services.AddScoped<ProductService>();
             return services;
         }
     }
