@@ -2,9 +2,10 @@
 {
     public interface ICrud<T>
     {
-        public Task<List<T>> GetT(int id = 0);
-        public Task<T> SetT(int id);
-        public Task<T> UpdateT(int id);
+        public Task<List<T>> GetT();
+        public Task<T?> GetTById(int id);
+        public Task<T> CreateT(T model);
+        public Task<T> UpdateT(T model);
         public Task<T> DeleteT(int id);
     }
 }

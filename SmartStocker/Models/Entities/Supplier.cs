@@ -1,4 +1,4 @@
-﻿namespace SmartStocker.Models
+﻿namespace SmartStocker.Models.Entities
 {
     public class Supplier
     {

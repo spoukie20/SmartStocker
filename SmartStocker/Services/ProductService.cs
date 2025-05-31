@@ -1,38 +1,59 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartStocker.Abscrations;
-using SmartStocker.Models;
+using SmartStocker.Models.DTOs;
+using SmartStocker.Models.Entities;
 
 namespace SmartStocker.Services
 {
     public class ProductService(AppDbContext context) : ICrud<Product>
     {
-        public async Task<List<Product>> GetT(int id = 0)
+        public async Task<List<Product>> GetT()
         {
-
-            if (id != 0)
-            {
-                return await context.Products.Where(i => i.Id == id).ToListAsync();
-            }
-            if (id == 0)
-            {
-                return await context.Products.ToListAsync();
-            }
-            throw new Exception("Id value was invalid");
+            return await context.Products.Where(i => i.Inactive == true).ToListAsync();
         }
 
-        public Task<Product> DeleteT(int id)
+        public async Task<Product?> GetTById(int id)
         {
-            throw new NotImplementedException();
+            return await context.Products.Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<Product> SetT(int id)
+        public async Task<List<Product>> GetTInative()
         {
-            throw new NotImplementedException();
+            return await context.Products.Where(i => i.Inactive == false).ToListAsync();
         }
 
-        public Task<Product> UpdateT(int id)
+        public async Task<Product> DeleteT(int id)
         {
-            throw new NotImplementedException();
+            var section = await GetTById(id);
+            if (section == null) throw new Exception("Section was null");
+            if (!section.Inactive) throw new Exception("Section was already null");
+
+            section.Inactive = false;
+            var effectedRows = context.SaveChanges();
+
+            if (effectedRows == 0) throw new Exception("Section was not updated");
+            return section;
+        }
+
+        public async Task<Product> CreateT(Product product)
+        {
+            context.Products.Add(product);
+            var affectedRows = await context.SaveChangesAsync();
+            if (affectedRows == 0) throw new Exception("Exam was not created");
+            return product;
+        }
+
+        public async Task<Product> UpdateT(Product model)
+        {
+            var section = await GetTById(model.Id);
+            if (section == null) throw new Exception("Section was null");
+            if (!section.Inactive) throw new Exception("Section was already null");
+
+            section = model;
+            var effectedRows = context.SaveChanges();
+
+            if (effectedRows == 0) throw new Exception("Section was not updated");
+            return section;
         }
     }
 }

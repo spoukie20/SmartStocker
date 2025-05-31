@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SmartStocker.Abscrations;
 using SmartStocker.Models;
+using SmartStocker.Models.Entities;
 
 namespace SmartStocker
 {

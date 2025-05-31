@@ -1,6 +1,6 @@
 ﻿using Org.BouncyCastle.Asn1.X509;
 
-namespace SmartStocker.Models
+namespace SmartStocker.Models.Entities
 {
     public class User
     {

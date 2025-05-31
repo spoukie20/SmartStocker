@@ -1,4 +1,4 @@
-﻿namespace SmartStocker.Models
+﻿namespace SmartStocker.Models.Entities
 {
     public class Product
     {
@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public int StockLevel { get; set; }
+        public bool Inactive { get; set; }
         public int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
         public ICollection<Order> Orders { get; set; }
