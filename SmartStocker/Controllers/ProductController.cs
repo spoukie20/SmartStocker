@@ -10,33 +10,49 @@ namespace SmartStocker.Controllers
     [Route("[controller]")]
     public class ProductController(ProductService product, IMapper mapper) : ControllerBase
     {
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
             try
             {
                 var result = await product.GetTById(id);
-                if (result == null) throw new Exception("Results where null");
+                if (result == null) return NotFound("model was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch (ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpGet("inactive/id")]
+        [HttpGet("inactive/{id}")]
         public async Task<IActionResult> GetProductInactive()
         {
             try
             {
                 var result = await product.GetTInative();
-                if (result == null) throw new Exception("Results where null");
+                if (result == null) return NotFound("model was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch (ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -46,57 +62,92 @@ namespace SmartStocker.Controllers
             try
             {
                 var result = await product.GetT();
-                if (result == null) throw new Exception("Results where null");
+                if (result == null) return NotFound("model was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch (ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpPatch("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try
             {
                 var result = await product.DeleteT(id);
+                if (result == null) return NotFound("model was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch (ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(DTOCreateProduct model)
+        public async Task<IActionResult> CreateProduct([FromBody] DTOCreateProduct model)
         { 
             try
             {
                 var mapped = mapper.Map<Product>(model);
-                mapped.Inactive = true;
+                mapped.IsActive = true;
 
                 var result = await product.CreateT(mapped);
+                if (result == null) return NotFound("model was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch (ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpPatch("id")]
-        public async Task<IActionResult> UpdateProduct(Product model)
+        [HttpPatch]
+        public async Task<IActionResult> UpdateProduct([FromBody] Product model)
         {
             try
             {
                 var result = await product.UpdateT(model);
+                if (result == null) return NotFound("models was null");
                 return Ok(result);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.InnerException);
+            }
+            catch(ArgumentException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
