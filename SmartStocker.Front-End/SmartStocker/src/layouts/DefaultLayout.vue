@@ -1,12 +1,14 @@
 <template>
   <div>
+    <nav>
       <Navbar/>
-
-    <main class="p-4">
+    </nav>
+    <main class="">
+      <slot/>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import Navbar from 'src/componets/Navbar.vue'
+import Navbar from '@/layouts/Navbar.vue'
 </script>
